@@ -42,7 +42,7 @@ router.get("/:id", (req, res) => {
 });
 
 // Allow user to post Project & return submission
-router.post("/", (req, res) => {
+router.post("/post/", (req, res) => {
   const { name, description } = req.body;
   const newProject = { name, description };
   projectModel

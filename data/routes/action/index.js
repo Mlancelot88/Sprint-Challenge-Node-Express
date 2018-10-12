@@ -2,7 +2,7 @@ const express = require("express");
 const actionModel = require("../../helpers/actionModel.js");
 const router = express.Router();
 
-// Retrieves all available actions
+// Retrieves ALL available actions
 router.get("/", (req, res) => {
   actionModel
     .get()
@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
 });
 
 // Allow user to post new action. Return action submission.
-router.post("/", (req, res) => {
+router.post("/post/", (req, res) => {
   const { project_id, description, notes } = req.body;
   const newAction = { project_id, description, notes };
   actionModel
