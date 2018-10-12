@@ -17,4 +17,19 @@ router.get("/", (req, res) => {
     );
 });
 
+// Retrieve Action by ID
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  actionModel
+    .get(id)
+    .then(action => res.status(200).json(action))
+    .catch(err =>
+      res
+        .status(500)
+        .json(
+          `Server could not retrieve action information: ${err}. It is likely the action with ID ${id} does not exist.`
+        )
+    );
+});
+
 module.exports = router;
