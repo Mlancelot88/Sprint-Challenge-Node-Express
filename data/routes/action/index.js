@@ -43,4 +43,20 @@ router.post("/", (req, res) => {
     .catch(err => res.status(500).json(`Unable to post new action: ${err}`));
 });
 
+// Allow user to edit action by ID. Return updated action.
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { project_id, description, notes, completed } = req.body;
+  const updatedAction = { project_id, description, notes, completed };
+  actionModel
+    .update(id, updatedAction)
+    .then(action => {
+      if (action) return res.status(200).json(action);
+      else return res.status(404).json(`Action, ID ${id}, does not exist.`);
+    })
+    .catch(err =>
+      res.status(500).json(`Server could not update action: ${err}`)
+    );
+});
+
 module.exports = router;
