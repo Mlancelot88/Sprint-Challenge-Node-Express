@@ -1,6 +1,5 @@
 const express = require("express");
 const actionModel = require("../../data/helpers/actionModel.js");
-const projectModel = require("../../data/helpers/projectModel.js");
 const router = express.Router();
 
 // Retrieves all available actions
@@ -56,6 +55,21 @@ router.put("/:id", (req, res) => {
     })
     .catch(err =>
       res.status(500).json(`Server could not update action: ${err}`)
+    );
+});
+
+// Delete action by ID.
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  actionModel
+    .remove(id)
+    .then(del => {
+      if (del)
+        return res.status(200).json(`Action, ID ${id}, successfully deleted.`);
+      else return res.status(404).json(`Action, ID ${id}, does not exist.`);
+    })
+    .catch(err =>
+      res.status(500).json(`Server could not delete action: ${err}`)
     );
 });
 
