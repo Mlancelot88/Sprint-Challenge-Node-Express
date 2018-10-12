@@ -48,8 +48,25 @@ router.post("/", (req, res) => {
   projectModel
     .insert(newProject)
     .then(project => res.status(201).json(project))
+    .catch(err => res.status(500).json(`Project submission failed: ${err}`));
+});
+
+// Identify and edit Project by ID. Return revision.
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const { name, description, completed } = req.body;
+  const updatedProject = { name, description, completed };
+  projectModel
+    .update(id, updatedProject)
+    .then(project => {
+      if (project) {
+        return res.status(200).json(project);
+      } else {
+        return res.status(404).json(`Project, ID ${id}, does not exist.`);
+      }
+    })
     .catch(err =>
-      res.status(500).json(`Project submission failed: ${err}`)
+      res.status(500).json(`Revision failed. Server could not update: ${err}`)
     );
 });
 
