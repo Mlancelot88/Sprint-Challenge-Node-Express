@@ -2,7 +2,7 @@ const express = require("express");
 const projectModel = require("../../data/helpers/projectModel.js");
 const router = express.Router();
 
-// Retreive ALL Projects
+// Retrieve ALL Projects
 router.get("/", (req, res) => {
   projectModel
     .get()
@@ -38,6 +38,18 @@ router.get("/:id", (req, res) => {
       res
         .status(500)
         .json(`Server could not retrieve project information: ${err}`)
+    );
+});
+
+// Allow user to post Project & return submission
+router.post("/", (req, res) => {
+  const { name, description } = req.body;
+  const newProject = { name, description };
+  projectModel
+    .insert(newProject)
+    .then(project => res.status(201).json(project))
+    .catch(err =>
+      res.status(500).json(`Project submission failed: ${err}`)
     );
 });
 
