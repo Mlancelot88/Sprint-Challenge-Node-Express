@@ -85,4 +85,25 @@ router.delete("/:id", (req, res) => {
     );
 });
 
+// Retrieve all possible actions for Project by ID
+router.get("/:id/actions", (req, res) => {
+  const { id } = req.params;
+  projectModel
+    .getProjectActions(id)
+    .then(actions => {
+      if (actions.length) {
+        return res.status(200).json(actions);
+      } else {
+        return res
+          .status(404)
+          .json(`Project, ID ${id}, does not exist OR actions do not apply.`);
+      }
+    })
+    .catch(err =>
+      res
+        .status(500)
+        .json(`Server could not retrieve project information: ${err}`)
+    );
+});
+
 module.exports = router;
