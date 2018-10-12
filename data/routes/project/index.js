@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const { id } = req.params.id;
   projectModel
-    .get(parseInt(id))
+    .get(id)
     .then(project => {
       if (project.length === 1) {
         return res.status(200).json(project);
@@ -67,6 +67,21 @@ router.put("/:id", (req, res) => {
     })
     .catch(err =>
       res.status(500).json(`Revision failed. Server could not update: ${err}`)
+    );
+});
+
+// Identify and delete Project by ID.
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  projectModel
+    .remove(id)
+    .then(del => {
+      if (del)
+        return res.status(200).json(`Project, ID ${id}, successfully deleted.`);
+      else return res.status(404).json(`Project, ID ${id}, does not exist.`);
+    })
+    .catch(err =>
+      res.status(500).json(`Server could not delete project: ${err}`)
     );
 });
 
