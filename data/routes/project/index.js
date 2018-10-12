@@ -1,5 +1,5 @@
 const express = require("express");
-const projectModel = require("../../data/helpers/projectModel.js");
+const projectModel = require("../../helpers/projectModel.js");
 const router = express.Router();
 
 // Retrieve ALL Projects

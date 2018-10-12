@@ -1,5 +1,5 @@
 const express = require("express");
-const actionModel = require("../../data/helpers/actionModel.js");
+const actionModel = require("../../helpers/actionModel.js");
 const router = express.Router();
 
 // Retrieves all available actions
